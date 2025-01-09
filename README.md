@@ -62,7 +62,7 @@ def gen_fused_noise(index_matrices, noiseA, noiseB, fusemask, K=5):
         torch.Tensor: The best noiseA matrix.
     """
 
-    selected_matrices = sorted(index_matrices, key=lambda m: torch.mean((1. - m) * noiseA + m * noiseB))[:K]
+    selected_matrices = sorted(index_matrices, key=lambda m: torch.abs(torch.mean((1. - m) * noiseA + m * noiseB)))[:K]
     best_ratio = float('-inf')
     best_xT = None
     for new_mask in selected_matrices:
